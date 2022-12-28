@@ -1,4 +1,4 @@
-import 'key_fields.dart';
+import '../key_fields.dart';
 
 class NetworkConstant {
   NetworkConstant({
@@ -24,4 +24,12 @@ class NetworkConstant {
 
   late String base;
   Duration timeoutDuration;
+
+  addTokenToHeader(String? token) {
+    header.addAll({KeyFields.access: token ?? ''});
+  }
+
+  removeTokenFromHeader() {
+    header.remove(KeyFields.access);
+  }
 }
