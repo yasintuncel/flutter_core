@@ -22,4 +22,7 @@ MaterialColor mainMaterialColor = MaterialColor(
 
 ThemeData mainTheme = ThemeData(
   primarySwatch: mainMaterialColor,
+  appBarTheme: const AppBarTheme(
+    centerTitle: true,
+  ),
 );
