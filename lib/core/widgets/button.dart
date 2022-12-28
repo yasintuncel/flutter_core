@@ -7,37 +7,37 @@ Widget getButton(
   String title,
   onPressed, {
   fontSize = 18.0,
-  color = null,
+  color,
   borderRadius = 1.0,
 }) {
   return ClipRRect(
     borderRadius: BorderRadius.circular(defaultRadiusValue * borderRadius),
     child: ElevatedButton(
-      child: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: fontSize),
-      ),
       style: ElevatedButton.styleFrom(
         minimumSize: const Size.fromHeight(50), // NEW
         backgroundColor: color,
       ),
       onPressed: onPressed,
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: fontSize),
+      ),
     ),
   );
 }
 
-Widget getTextButton(BuildContext context, String title, onPressed, {fontSize: 18.0, color = null, textColor = null}) {
+Widget getTextButton(BuildContext context, String title, onPressed, {fontSize = 18.0, color, textColor}) {
   return TextButton(
-    child: Text(
-      title,
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: fontSize, color: textColor),
-    ),
     style: ElevatedButton.styleFrom(
       minimumSize: const Size.fromHeight(50), // NEW
       backgroundColor: color,
     ),
     onPressed: onPressed,
+    child: Text(
+      title,
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: fontSize, color: textColor),
+    ),
   );
 }
