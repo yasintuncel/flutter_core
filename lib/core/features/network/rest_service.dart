@@ -8,36 +8,34 @@ import 'model_parser.dart';
 import 'network_reponse.dart';
 import 'network_service.dart';
 
-class RestService<T> {
-  RestService(this._path, this._parser) {
+class RestService<T> extends NetworkService {
+  RestService(this._path, this._parser) : super(constant: networkConstant) {
     fullPath = '${networkConstant.type}://${networkConstant.host}:${networkConstant.port}/$_path';
-    networkService = NetworkService(constant: networkConstant);
   }
 
   final String _path;
   final ModelParser<T> _parser;
 
   late String fullPath;
-  late NetworkService networkService;
 
   Future<NetworkResponse> list() async {
-    return _handleResponse<List<T>>(await networkService.get(fullPath));
+    return _handleResponse<List<T>>(await this.get(fullPath));
   }
 
-  Future<NetworkResponse> get(String id) async {
-    return _handleResponse<T>(await networkService.get('$fullPath/$id'));
+  Future<NetworkResponse> getOne(String id) async {
+    return _handleResponse<T>(await this.get('$fullPath/$id'));
   }
 
-  Future<NetworkResponse> delete(String id) async {
-    return _handleResponse<T>(await networkService.delete('$fullPath/$id'));
+  Future<NetworkResponse> deleteOne(String id) async {
+    return _handleResponse<T>(await this.delete('$fullPath/$id'));
   }
 
   Future<NetworkResponse> update(String id, Map<String, dynamic> body) async {
-    return _handleResponse<T>(await networkService.patch('$fullPath/$id', body: body));
+    return _handleResponse<T>(await this.patch('$fullPath/$id', body: body));
   }
 
   Future<NetworkResponse> create(Map<String, dynamic> body) async {
-    return _handleResponse<T>(await networkService.patch(fullPath, body: body));
+    return _handleResponse<T>(await this.patch(fullPath, body: body));
   }
 
   NetworkResponse _handleResponse<Y>(Response response) {
