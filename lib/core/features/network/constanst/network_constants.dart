@@ -1,4 +1,4 @@
-import '../key_fields.dart';
+import 'key_fields.dart';
 
 class NetworkConstant {
   NetworkConstant({
@@ -7,9 +7,7 @@ class NetworkConstant {
     required this.port,
     required this.apikey,
     this.timeoutDuration = const Duration(seconds: 15),
-    this.header = const {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
+    required this.header,
   }) {
     base = '$type$host:$port';
     header.addAll({KeyFields.apikey: apikey});

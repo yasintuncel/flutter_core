@@ -1,58 +1,43 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http_status_code/http_status_code.dart';
 
 import 'constanst/options.dart';
 import 'model_parser.dart';
 import 'network_reponse.dart';
+import 'network_service.dart';
 
 class RestService<T> {
-  RestService(
-    this._path,
-    this._parser,
-  ) {
-    _fullPath = '${networkConstant.host}/$_path';
-    _headers = networkConstant.header;
-    _duration = networkConstant.timeoutDuration;
+  RestService(this._path, this._parser) {
+    fullPath = '${networkConstant.type}://${networkConstant.host}:${networkConstant.port}/$_path';
+    networkService = NetworkService(constant: networkConstant);
   }
 
   final String _path;
   final ModelParser<T> _parser;
 
-  late String _fullPath;
-  late Map<String, String> _headers;
-  late Duration _duration;
+  late String fullPath;
+  late NetworkService networkService;
 
   Future<NetworkResponse> list() async {
-    return _handleResponse<List<T>>(
-      await http.get(Uri.parse(_fullPath), headers: _headers).timeout(_duration),
-    );
+    return _handleResponse<List<T>>(await networkService.get(fullPath));
   }
 
   Future<NetworkResponse> get(String id) async {
-    return _handleResponse<T>(
-      await http.get(Uri.parse('$_fullPath/$id'), headers: _headers).timeout(_duration),
-    );
+    return _handleResponse<T>(await networkService.get('$fullPath/$id'));
   }
 
   Future<NetworkResponse> delete(String id) async {
-    return _handleResponse<T>(
-      await http.delete(Uri.parse('$_fullPath/$id'), headers: _headers).timeout(_duration),
-    );
+    return _handleResponse<T>(await networkService.delete('$fullPath/$id'));
   }
 
   Future<NetworkResponse> update(String id, Map<String, dynamic> body) async {
-    return _handleResponse<T>(
-      await http.patch(Uri.parse('$_fullPath/$id'), headers: _headers, body: json.encode(body)).timeout(_duration),
-    );
+    return _handleResponse<T>(await networkService.patch('$fullPath/$id', body: body));
   }
 
   Future<NetworkResponse> create(Map<String, dynamic> body) async {
-    return _handleResponse<T>(
-      await http.post(Uri.parse(_fullPath), headers: _headers, body: json.encode(body)).timeout(_duration),
-    );
+    return _handleResponse<T>(await networkService.patch(fullPath, body: body));
   }
 
   NetworkResponse _handleResponse<Y>(Response response) {
