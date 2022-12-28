@@ -3,25 +3,23 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http_status_code/http_status_code.dart';
-import 'package:user/core/features/network/new/network.dart';
 
-import 'network_model_parser.dart';
+import 'constanst/options.dart';
+import 'model_parser.dart';
 import 'network_reponse.dart';
 
 class RestService<T> {
   RestService(
     this._path,
     this._parser,
-    this._constants,
   ) {
-    _fullPath = '${_constants.host}/$_path';
-    _headers = _constants.header;
-    _duration = _constants.timeoutDuration;
+    _fullPath = '${networkConstant.host}/$_path';
+    _headers = networkConstant.header;
+    _duration = networkConstant.timeoutDuration;
   }
 
   final String _path;
-  final NetworkModelParser<T> _parser;
-  final NetworkConstant _constants;
+  final ModelParser<T> _parser;
 
   late String _fullPath;
   late Map<String, String> _headers;
@@ -67,7 +65,6 @@ class RestService<T> {
 
     var handledResponse = NetworkResponse(
       statusCode: response.statusCode,
-      message: response.bodyBytes.toString(),
     );
 
     if (Y is List) {

@@ -1,11 +1,11 @@
 class NetworkResponse<T> {
   NetworkResponse({
     required this.statusCode,
-    required this.message,
+    this.message,
     this.data,
   });
 
   int statusCode;
-  String message;
+  String? message;
   T? data;
 }

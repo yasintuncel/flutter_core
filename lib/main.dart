@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'core/features/network/new/network_initializer.dart';
-
 void main() {
-  NetworkInitializer.instance;
   runApp(const MyApp());
 }
 
