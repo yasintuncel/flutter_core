@@ -1,4 +1,4 @@
 abstract class ModelParser<T> {
   T fromJson(Map<String, dynamic> json);
-  Map<String, dynamic> toJson(T t);
+  Map<String, dynamic> toJson(T model);
 }
