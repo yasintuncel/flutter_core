@@ -57,7 +57,10 @@ flutter_icons:
   image_path: "assets/app/icon.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 
-assets:
-  - assets/
-  - assets/app/
-  - assets/images/
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/app/
+    - assets/images/
